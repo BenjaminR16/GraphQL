@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Products {
+  id          Int                    @id @default(autoincrement())
+  nombre      String
+  descripcion String
+  precio      Float
+  embedding   Unsupported("vector")?
+  imagen      String?
+  userId      Int
+  User        User                   @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id       Int        @id @default(autoincrement())
+  email    String     @unique
+  rol      String
+  password String
+  nombre   String
+  Products Products[]
+}
