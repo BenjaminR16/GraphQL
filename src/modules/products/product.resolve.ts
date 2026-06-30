@@ -14,7 +14,6 @@ import { ProductService } from "./produc.service.js";
 
 export const productResolvers = {
     Query: {
-        // products(search: String): [Product!]!
         products: (
             _parent: unknown,
             args: { search?: string },
@@ -25,18 +24,15 @@ export const productResolvers = {
     },
 
     Mutation: {
-        // createProduct(title, price, description): Product!
         createProduct: (
             _parent: any,
             args: { nombre: string; precio: number; descripcion: string },
             ctx: AppContext,
         ) => {
-            // Map resolver args to the service input shape (CreateProductInput expects `nombre` and `userId`)
             const payload = {
                 nombre: args.nombre,
                 price: args.precio,
                 description: args.descripcion,
-                // try to take userId from context if available, otherwise undefined
                 userId: (ctx as any).userId ?? (ctx as any).user?.id,
             } as any; // cast to any to satisfy expected service parameter
 
